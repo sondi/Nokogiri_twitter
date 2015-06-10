@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'open-uri'
 
 
 
@@ -6,7 +7,9 @@ class TwitterScrapper
 attr_reader :tweets_v, :following_v, :followers_v, :favorites_v, :content
 
   def initialize(url)
-  	@page = Nokogiri::HTML(open("twitter_account.html"))
+    @page = Nokogiri::HTML(open(url))
+    # puts html_file.read
+
 
   end
 
@@ -35,7 +38,7 @@ attr_reader :tweets_v, :following_v, :followers_v, :favorites_v, :content
 end
 
 
-twitter = TwitterScrapper.new("twitter_account.html")
+twitter = TwitterScrapper.new("https://twitter.com/s8ndi")
 twitter.extract_stats
 puts "Username: #{twitter.extract_username}"
 puts "-" * 60
@@ -43,5 +46,7 @@ puts "Tweets: #{twitter.tweets_v} Following: #{twitter.following_v} Followers: #
 puts "-" * 60
 puts twitter.extract_tweets
 
+
+#reference: http://ruby.bastardsbook.com/chapters/html-parsing/
 
 
